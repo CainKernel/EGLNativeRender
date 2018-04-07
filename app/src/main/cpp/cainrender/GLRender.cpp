@@ -31,16 +31,22 @@ void GLRender::surfaceCreated(ANativeWindow *window) {
     mWindowSurface = new WindowSurface(mEglCore, window, false);
     assert(mWindowSurface != NULL && mEglCore != NULL);
     mWindowSurface->makeCurrent();
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-    glDisable(GL_DEPTH_TEST);
-    mWindowSurface->swapBuffers();
+    mTriangle = new Triangle();
+    mTriangle->init();
 }
 
 void GLRender::surfaceChanged(int width, int height) {
-
+    mWindowSurface->makeCurrent();
+    mTriangle->onDraw(width, height);
+    mWindowSurface->swapBuffers();
 }
 
 void GLRender::surfaceDestroyed() {
+    if (mTriangle) {
+        mTriangle->destroy();
+        delete mTriangle;
+        mTriangle = NULL;
+    }
     if (mWindowSurface) {
         mWindowSurface->release();
         delete mWindowSurface;

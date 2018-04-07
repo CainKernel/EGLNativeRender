@@ -9,6 +9,7 @@
 #include <android/native_window.h>
 #include "../caingles/EglCore.h"
 #include "../caingles/WindowSurface.h"
+#include "Triangle.h"
 
 class GLRender {
 public:
@@ -25,6 +26,7 @@ public:
 private:
     EglCore *mEglCore;
     WindowSurface *mWindowSurface;
+    Triangle *mTriangle;
 };
 
 

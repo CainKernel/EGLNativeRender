@@ -45,6 +45,7 @@ add_library( # Sets the name of the library.
 
              # cainrender
              src/main/cpp/cainrender/GLRender.cpp
+             src/main/cpp/cainrender/Triangle.cpp
 
              # common
              src/main/cpp/common/Looper.cpp
