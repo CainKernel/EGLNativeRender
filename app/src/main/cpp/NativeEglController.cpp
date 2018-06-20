@@ -9,7 +9,7 @@ ANativeWindow *mWindow = NULL;
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_cgfay_eglnativerender_MainActivity_nativeInit(JNIEnv *env, jobject instance) {
+Java_com_cgfay_eglnativerender_EGLRender_nativeInit(JNIEnv *env, jobject instance) {
 
     // TODO
     mLooper = new MyLooper();
@@ -17,7 +17,7 @@ Java_com_cgfay_eglnativerender_MainActivity_nativeInit(JNIEnv *env, jobject inst
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_cgfay_eglnativerender_MainActivity_nativeRelease(JNIEnv *env, jobject instance) {
+Java_com_cgfay_eglnativerender_EGLRender_nativeRelease(JNIEnv *env, jobject instance) {
     if (mLooper != NULL) {
         mLooper->quit();
         delete mLooper;
@@ -31,7 +31,7 @@ Java_com_cgfay_eglnativerender_MainActivity_nativeRelease(JNIEnv *env, jobject i
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_cgfay_eglnativerender_MainActivity_onSurfaceCreated(JNIEnv *env, jobject instance,
+Java_com_cgfay_eglnativerender_EGLRender_onSurfaceCreated(JNIEnv *env, jobject instance,
                                                              jobject surface) {
     if (mWindow) {
         ANativeWindow_release(mWindow);
@@ -45,7 +45,7 @@ Java_com_cgfay_eglnativerender_MainActivity_onSurfaceCreated(JNIEnv *env, jobjec
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_cgfay_eglnativerender_MainActivity_onSurfaceChanged(JNIEnv *env, jobject instance,
+Java_com_cgfay_eglnativerender_EGLRender_onSurfaceChanged(JNIEnv *env, jobject instance,
                                                              jint width, jint height) {
     if (mLooper) {
         mLooper->postMessage(kMsgSurfaceChanged, width, height);
@@ -55,7 +55,7 @@ Java_com_cgfay_eglnativerender_MainActivity_onSurfaceChanged(JNIEnv *env, jobjec
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_cgfay_eglnativerender_MainActivity_onSurfaceDestroyed(JNIEnv *env, jobject instance) {
+Java_com_cgfay_eglnativerender_EGLRender_onSurfaceDestroyed(JNIEnv *env, jobject instance) {
 
     if (mLooper) {
         mLooper->postMessage(kMsgSurfaceDestroyed);

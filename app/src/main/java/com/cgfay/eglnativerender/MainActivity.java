@@ -9,23 +9,16 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements SurfaceHolder.Callback {
 
-    // Used to load the 'native-lib' library on application startup.
-    static {
-        System.loadLibrary("nativeEgl");
-    }
-    private native void nativeInit();
-    private native void nativeRelease();
-    private native void onSurfaceCreated(Surface surface);
-    private native void onSurfaceChanged(int width, int height);
-    private native void onSurfaceDestroyed();
-
     private SurfaceView mSurfaceView;
+
+    private EGLRender mRender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        nativeInit();
+        mRender = new EGLRender();
+        mRender.init();
         mSurfaceView = (SurfaceView) findViewById(R.id.surface_view);
         mSurfaceView.getHolder().addCallback(this);
     }
@@ -33,24 +26,24 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
 
     @Override
     protected void onDestroy() {
-        nativeRelease();
+        mRender.release();
+        mRender = null;
         super.onDestroy();
     }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        onSurfaceCreated(holder.getSurface());
+        mRender.surfaceCreated(holder.getSurface());
     }
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-        onSurfaceChanged(width, height);
+        mRender.surfaceChanged(width, height);
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        onSurfaceDestroyed();
+        mRender.surfaceDestroyed();
     }
-
 
 }

@@ -45,6 +45,7 @@ int Triangle::init() {
 
 
 void Triangle::onDraw(int width, int height) {
+    ALOGD("hahahah");
     GLfloat vertices[] = {
             0.0f,  0.5f, 0.0f,
             -0.5f, -0.5f, 0.0f,
